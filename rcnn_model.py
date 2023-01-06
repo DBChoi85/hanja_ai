@@ -7,6 +7,11 @@ import time
 import tensorflow as tf
 import numpy as np
 
+model_path = ""
+letter_path = ""
+result_path = ""
+tareget_path = ""
+
 
 class InferenceConfig(Config):
     NAME = "balloon"
@@ -23,25 +28,25 @@ class InferenceConfig(Config):
     DETECTION_MAX_INSTANCES = 2000
 
 
-with tf.device("/GPU:1"):
-    config = InferenceConfig()
-    config.display()
 
-    MODEL_DIR = 'c:\\data\\log\\'
-    model = modellib.MaskRCNN(mode='inference', model_dir=MODEL_DIR, config=config)
+config = InferenceConfig()
+config.display()
 
-    COCO_MODEL = os.path.join(MODEL_DIR, 'mask_rcnn_balloon_0350.h5')
-    model.load_weights(COCO_MODEL, by_name=True)
-    print("Ready")
+MODEL_DIR = model_path
+model = modellib.MaskRCNN(mode='inference', model_dir=MODEL_DIR, config=config)
+
+COCO_MODEL = os.path.join(MODEL_DIR, 'mask_rcnn_balloon_0350.h5')
+model.load_weights(COCO_MODEL, by_name=True)
+print("Ready")
 
 
 
 def run_mrcc(img_h, img_w):
-    letter_dir = "D:/letter"
-    result_dir = "D:/bbox"
+    letter_dir = letter_path
+    result_dir = result_path
     if not os.path.exists(result_dir):
         os.mkdir(result_dir)
-    target_path = "D:/target"
+    target_path = target_path
     if not os.path.exists(letter_dir):
         os.mkdir(letter_dir)
     class_names = ['BG', 'hanja', 'seju']
@@ -53,9 +58,7 @@ def run_mrcc(img_h, img_w):
         for img in img_list:
             img_path = os.path.join(book_path, img)
             print(img_path)
-            # img_path = os.path.join(target_dir, img_file_name)
             image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-            # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             h, w = image.shape
 
             _, image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)

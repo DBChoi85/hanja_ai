@@ -1,25 +1,30 @@
 from keras.models import load_model
-import inception_resnet_v2
 from PIL import Image, ImageFile
 import numpy as np
 from keras_preprocessing import image
-import time
-import tensorflow as tf
 import os
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
-save_path = "C:/data/api_test/save/"
+save_path = ""
+label_path = ""
+txt_path = ""
+letter_path = ""
+
 epochs = 40
 
-with tf.device("/GPU:0"):
-    print("model load 시작::")
-    model = load_model(save_path + '%d_AE_model.h5' % epochs)
-    print('model load 완료::')
+print("model load 시작::")
+model = load_model(save_path + '%d_AE_model.h5' % epochs)
+print('model load 완료::')
 
-f = open("c:/data/api_test/record_label_2nd.txt", 'r', encoding="utf-8")
+f = open(label_path, 'r', encoding="utf-8")
 line = f.readline()
 dic_line = eval(line)
 f.close()
+
+
+def preprocess_input(x):
+    x /= 255.
+    return x
 
 
 def detect_fn(img_path):
@@ -27,7 +32,7 @@ def detect_fn(img_path):
     input = input.resize((100,100))
     input = input.convert('L')
     input_arr = image.img_to_array(input)
-    input_arr = inception_resnet_v2.preprocess_input(input_arr)
+    input_arr = preprocess_input(input_arr)
     input_arr = np.array(([input_arr]))
     # print(input_arr)
     predict = model.predict((input_arr))
@@ -37,10 +42,10 @@ def detect_fn(img_path):
 
 def create_unicode():
     tmp_list = str()
-    txt_path = "D:/txt_file"
+    txt_path = txt_path
     if not os.path.exists(txt_path):
         os.mkdir(txt_path)
-    letter_dir = "D:/letter"
+    letter_dir = letter_path
     book_dir_list = os.listdir(letter_dir)
     for book_dir in book_dir_list:
         book_dir_path = os.path.join(letter_dir, book_dir)
@@ -64,7 +69,7 @@ def create_unicode():
                     tmp_list += uni_to_txt
                 tmp_list += '\n'
             # print(unicode)
-    print(tmp_list)
-    txt_file.writelines(tmp_list)
-    txt_file.close()
-    return "Done"
+            print(tmp_list)
+            txt_file.writelines(tmp_list)
+            txt_file.close()
+            return "Done"
