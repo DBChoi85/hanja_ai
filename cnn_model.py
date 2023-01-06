@@ -5,10 +5,10 @@ from keras_preprocessing import image
 import os
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
-save_path = ""
-label_path = ""
-txt_path = ""
-letter_path = ""
+save_path = "/content/drive/MyDrive/hanja_ai_model/log"
+label_path = "record_label_2nd.txt"
+txt_path = "/content/drive/MyDrive/txt"
+letter_path = "/content/drive/MyDrive/letter"
 
 epochs = 40
 

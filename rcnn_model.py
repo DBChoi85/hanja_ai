@@ -1,16 +1,15 @@
 import os
 import cv2
-import mrcnn.model as modellib
-from mrcnn.config import Config
-from mrcnn import visualize
+import model as modellib
+from config import Config
+import visualize
 import time
-import tensorflow as tf
-import numpy as np
 
-model_path = ""
-letter_path = ""
-result_path = ""
-tareget_path = ""
+
+model_path = "/content/drive/MyDrive/hanja_ai_model/log"
+letter_path = "/content/drive/MyDrive/letter"
+result_path = "/content/drive/MyDrive/bbox"
+tareget_path = "/content/drive/MyDrive/target"
 
 
 class InferenceConfig(Config):
@@ -71,7 +70,7 @@ def run_mrcc(img_h, img_w):
             print('mystat : ', mysize)
 
             r = results[0]
-            visualize.display_instances(mysize, letter_dir=letter_dir, result_dir=book, img_file_name=img, img_h=img_h, img_w=img_w,
+            visualize.display_instances(mysize, letter_dir=letter_dir, bbox_dir=result_path, result_dir=book, img_file_name=img, img_h=img_h, img_w=img_w,
                                         image=image, boxes=r['rois'], masks=r['masks'], class_ids=r['class_ids'],
                                         class_names=class_names, scores=r['scores'], figsize=(w, h))
 
