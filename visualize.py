@@ -98,7 +98,7 @@ def display_instances(mysize, letter_dir, bbox_dir, result_dir, img_file_name, i
                         tmp_result_path = os.path.join(fin_path, str(line_idx))
                         if not os.path.exists(tmp_result_path):
                             os.mkdir(tmp_result_path)
-                        cv2.imwrite(tmp_result_path + '\\' + "%s_%s.jpg" % (img_name, str(i).zfill(3)), blank_img)
+                        cv2.imwrite(os.path.join(tmp_result_path ,  "%s_%s.jpg" % (img_name, str(i).zfill(3))), blank_img)
                     else:
                         fin_path = os.path.join(dst_path, img_name)
                         if not os.path.exists(fin_path):
@@ -106,7 +106,7 @@ def display_instances(mysize, letter_dir, bbox_dir, result_dir, img_file_name, i
                         tmp_result_path = os.path.join(fin_path, str(line_idx))
                         if not os.path.exists(tmp_result_path):
                             os.mkdir(tmp_result_path)
-                        cv2.imwrite(tmp_result_path + '\\' + "%s_%s.jpg" % (img_name, str(i).zfill(3)), blank_img)
+                        cv2.imwrite(os.path.join(tmp_result_path ,  "%s_%s.jpg" % (img_name, str(i).zfill(3))), blank_img)
                         line_count += 1
 
             bbox_path = bbox_dir
@@ -114,5 +114,5 @@ def display_instances(mysize, letter_dir, bbox_dir, result_dir, img_file_name, i
             if not os.path.exists(bbox_result_dir):
                 os.mkdir(bbox_result_dir)
             cv2.rectangle(image, (x1, y1), (x2, y2), [255,0,0], 2)
-            cv2.imwrite(bbox_result_dir + '\\' + 'Bbox_%s' % (img_file_name), image)
+            cv2.imwrite(os.path.join(bbox_result_dir, 'Bbox_%s' % (img_file_name)), image)
 
