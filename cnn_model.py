@@ -5,10 +5,8 @@ from keras_preprocessing import image
 import os
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
-save_path = "/content/drive/MyDrive/hanja_ai_model/log"
+save_path = "/content/drive/MyDrive/hanja_ai_model/log/"
 label_path = "record_label_2nd.txt"
-txt_path = "/content/drive/MyDrive/txt"
-letter_path = "/content/drive/MyDrive/letter"
 
 epochs = 40
 
@@ -42,23 +40,26 @@ def detect_fn(img_path):
 
 def create_unicode():
     tmp_list = str()
-    txt_path = txt_path
+    txt_path =  "/content/drive/MyDrive/txt/"
     if not os.path.exists(txt_path):
         os.mkdir(txt_path)
-    letter_dir = letter_path
-    book_dir_list = os.listdir(letter_dir)
-    for book_dir in book_dir_list:
+    letter_dir = "/content/drive/MyDrive/letter/"
+    book_dir_list = os.listdir(letter_dir) # [test]
+    for book_dir in book_dir_list: 
         book_dir_path = os.path.join(letter_dir, book_dir)
-        page_dir_list = os.listdir(book_dir_path)
-        for page_dir in page_dir_list:
+        page_dir_list = os.listdir(book_dir_path) # [c2]
+        print('page_dir_list', page_dir_list)
+        for page_dir in page_dir_list: 
             page_dir_path = os.path.join(book_dir_path, page_dir)
             line_dir_list = os.listdir(page_dir_path)
+            print('line_dir_list', line_dir_list)
             txt_result_path = os.path.join(txt_path, book_dir)
             if not os.path.exists(txt_result_path):
                 os.mkdir(txt_result_path)
             txt_file = open(os.path.join(txt_result_path,'{}.txt'.format(page_dir)), 'w', encoding='utf-8')
-            for line_dir in line_dir_list:
+            for line_dir in line_dir_list: #[0, 1]
                 line_dir_path = os.path.join(page_dir_path, line_dir)
+                print(line_dir_path)
                 img_list = os.listdir(line_dir_path)
                 for img in img_list:
                     img_path = os.path.join(line_dir_path, img)
@@ -72,4 +73,4 @@ def create_unicode():
             print(tmp_list)
             txt_file.writelines(tmp_list)
             txt_file.close()
-            return "Done"
+    return "Done"
