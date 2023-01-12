@@ -6,10 +6,6 @@ import visualize
 import time
 
 
-model_path = "/content/drive/MyDrive/hanja_ai_model/log"
-letter_path = "/content/drive/MyDrive/letter"
-result_path = "/content/drive/MyDrive/bbox"
-tareget_path = "/content/drive/MyDrive/target"
 
 
 class InferenceConfig(Config):
@@ -31,7 +27,7 @@ class InferenceConfig(Config):
 config = InferenceConfig()
 config.display()
 
-MODEL_DIR = model_path
+MODEL_DIR = "/content/drive/MyDrive/hanja_ai_model/log"
 model = modellib.MaskRCNN(mode='inference', model_dir=MODEL_DIR, config=config)
 
 COCO_MODEL = os.path.join(MODEL_DIR, 'mask_rcnn_balloon_0350.h5')
@@ -41,11 +37,12 @@ print("Ready")
 
 
 def run_mrcc(img_h, img_w):
-    letter_dir = letter_path
-    result_dir = result_path
+    
+    letter_dir = "/content/drive/MyDrive/letter"
+    result_dir = "/content/drive/MyDrive/bbox"
     if not os.path.exists(result_dir):
         os.mkdir(result_dir)
-    target_path = target_path
+    target_path = "/content/drive/MyDrive/target"
     if not os.path.exists(letter_dir):
         os.mkdir(letter_dir)
     class_names = ['BG', 'hanja', 'seju']
