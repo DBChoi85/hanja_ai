@@ -95,7 +95,7 @@ def display_instances(mysize, letter_dir, bbox_dir, result_dir, img_file_name, i
                         fin_path = os.path.join(dst_path, img_name)
                         if not os.path.exists(fin_path):
                             os.mkdir(fin_path)
-                        tmp_result_path = os.path.join(fin_path, str(line_idx))
+                        tmp_result_path = os.path.join(fin_path, str(line_idx).zfill(3))
                         if not os.path.exists(tmp_result_path):
                             os.mkdir(tmp_result_path)
                         cv2.imwrite(os.path.join(tmp_result_path ,  "%s_%s.jpg" % (img_name, str(i).zfill(3))), blank_img)
@@ -103,7 +103,7 @@ def display_instances(mysize, letter_dir, bbox_dir, result_dir, img_file_name, i
                         fin_path = os.path.join(dst_path, img_name)
                         if not os.path.exists(fin_path):
                             os.mkdir(fin_path)
-                        tmp_result_path = os.path.join(fin_path, str(line_idx))
+                        tmp_result_path = os.path.join(fin_path, str(line_idx).zfill(3))
                         if not os.path.exists(tmp_result_path):
                             os.mkdir(tmp_result_path)
                         cv2.imwrite(os.path.join(tmp_result_path ,  "%s_%s.jpg" % (img_name, str(i).zfill(3))), blank_img)
